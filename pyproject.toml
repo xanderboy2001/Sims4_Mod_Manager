@@ -1,0 +1,27 @@
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+		\.git
+		| \.venv
+		| build
+		| dist
+)/
+'''
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+extend-select = ["I"]
+exclude = ["__pycache__", "build", "dist", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
