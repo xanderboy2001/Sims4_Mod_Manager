@@ -1,5 +1,7 @@
 import argparse
 import sys
+from sims4_mod_manager.utils import get_mods_dir
+from sims4_mod_manager.mods.manager import print_directory_tree
 
 
 def main():
@@ -16,7 +18,7 @@ def main():
 
     if args.command == "list":
         print("Listing installed mods...")
-        # TODO: Implement dir walk to organize mods by folder
+        print_directory_tree(get_mods_dir())
     else:
         parser.print_help()
         sys.exit(1)
