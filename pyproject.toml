@@ -1,6 +1,6 @@
 [tool.black]
 line-length = 88
-target-version = ['py311']
+target-version = ['py313']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -13,8 +13,7 @@ exclude = '''
 
 [tool.ruff]
 line-length = 88
-target-version = "py311"
-extend-select = ["I"]
+target-version = "py313"
 exclude = ["__pycache__", "build", "dist", ".venv"]
 
 [tool.ruff.lint]
