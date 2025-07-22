@@ -17,3 +17,7 @@ def create_default_config():
 def load_config():
     with config_path.open("r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def first_run():
+    create_default_config()
