@@ -6,5 +6,5 @@ def is_first_run() -> bool:
 
 
 def create_default_config():
-    config_dir.parent.mkdir(parents=True, exist_ok=True)
+    config_path.parent.mkdir(parents=True, exist_ok=True)
     default_config = {"mods_folder": str(get_mods_dir())}
