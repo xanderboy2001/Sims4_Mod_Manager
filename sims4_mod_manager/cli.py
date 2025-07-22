@@ -1,7 +1,8 @@
 import argparse
 import sys
-from sims4_mod_manager.utils import get_mods_dir
+
 from sims4_mod_manager.mods.manager import print_directory_tree
+from sims4_mod_manager.utils import get_mods_dir
 
 
 def main():
