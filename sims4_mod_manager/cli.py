@@ -29,7 +29,7 @@ def cmd_dump_config(args: argparse.Namespace) -> None:
 
 
 def cmd_scan(args: argparse.Namespace) -> None:
-    extensions = args.extensions or ["package", "ts4script"]
+    extensions = args.extensions or ["package", "script"]
     print(get_metadata(extensions))
 
 
