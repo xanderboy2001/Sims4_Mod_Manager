@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 
-from platformdirs import user_config_dir, user_documents_dir, user_data_dir
+from platformdirs import user_config_dir, user_data_dir, user_documents_dir
 
 APP_NAME = "Sims4ModManager"
 CONFIG_FILENAME = "config.json"
