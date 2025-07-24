@@ -1,4 +1,3 @@
-import os
 import sys
 from pathlib import Path
 
@@ -22,12 +21,13 @@ def get_os() -> str:
         return "unknown"
 
 
-def get_mods_dir() -> str:
+def get_mods_dir() -> Path:
     os_name = get_os()
     if os_name in ("windows", "mac"):
-        return user_documents_dir()
+        return Path(user_documents_dir())
     elif os_name == "linux":
-        return os.path.expanduser(
-            "~/.local/share/Steam/steamapps/compatdata/1222670/pfx/drive_c/users/"
-            + "steamuser/Documents/Electronic Arts/The Sims 4/Mods"
+        return (
+            Path.home()
+            / ".local/share/Steam/steamapps/compatdata/1222670/pfx"
+            / "drive_c/users/steamuser/Documents/Electronic Arts/The Sims 4/Mods"
         )
