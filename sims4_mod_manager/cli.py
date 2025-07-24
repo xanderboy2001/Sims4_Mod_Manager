@@ -4,7 +4,7 @@ from collections.abc import Callable
 
 from sims4_mod_manager.config import print_config
 from sims4_mod_manager.mods.manager import print_directory_tree
-from sims4_mod_manager.mods.metadata import get_metadata
+from sims4_mod_manager.mods.metadata import get_metadata, write_metadata
 from sims4_mod_manager.setup import first_run
 from sims4_mod_manager.utils import get_mods_dir
 
@@ -29,8 +29,11 @@ def cmd_dump_config(args: argparse.Namespace) -> None:
 
 
 def cmd_scan(args: argparse.Namespace) -> None:
-    extensions = args.extensions or ["package", "script"]
-    print(get_metadata(extensions))
+    metadata = None
+    if args.extensions:
+        metadata = get_metadata(args.extensions)
+    write_metadata(metadata)
+    print("wrote metadata")
 
 
 def parse_args() -> argparse.Namespace:
