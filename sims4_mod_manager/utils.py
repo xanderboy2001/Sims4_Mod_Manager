@@ -6,7 +6,7 @@ from platformdirs import user_config_dir, user_documents_dir
 APP_NAME = "Sims4ModManager"
 CONFIG_FILENAME = "config.json"
 
-config_path = Path(user_config_dir(APP_NAME)) / CONFIG_FILENAME
+config_file_path = Path(user_config_dir(APP_NAME)) / CONFIG_FILENAME
 
 
 def get_os() -> str:

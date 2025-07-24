@@ -2,7 +2,7 @@ import json
 
 from platformdirs import user_downloads_dir
 
-from sims4_mod_manager.utils import config_path, get_mods_dir
+from sims4_mod_manager.utils import config_file_path, get_mods_dir
 
 DEFAULT_CONFIG = {
     "paths": {
@@ -13,13 +13,13 @@ DEFAULT_CONFIG = {
 
 
 def create_default_config():
-    config_path.parent.mkdir(parents=True, exist_ok=True)
-    with config_path.open("w", encoding="utf-8") as f:
+    config_file_path.parent.mkdir(parents=True, exist_ok=True)
+    with config_file_path.open("w", encoding="utf-8") as f:
         json.dump(DEFAULT_CONFIG, f, indent=4)
 
 
 def load_config():
-    with config_path.open("r", encoding="utf-8") as f:
+    with config_file_path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 
