@@ -1,16 +1,21 @@
 from sims4_mod_manager.utils import get_mods_dir
 
+PATTERN_MAP = {"package": "*.package", "script": "*.ts4script"}
 EXTENSION_MAP = {".package": "Package", ".ts4script": "Script"}
 
 
-def get_metadata(extensions: str | list[str]) -> list[dict[str, str]]:
-    if isinstance(extensions, str):
-        extensions = [extensions]
+def get_metadata(filetypes: str | list[str]) -> list[dict[str, str]]:
+    if isinstance(filetypes, str):
+        filetypes = [filetypes]
     directory = get_mods_dir()
     metadata_list = []
+    patterns = []
 
-    for extension in extensions:
-        for file in directory.rglob(extension):
+    for filetype in filetypes:
+        patterns.append(PATTERN_MAP[filetype.lower()])
+
+    for pattern in patterns:
+        for file in directory.rglob(pattern):
             try:
                 metadata = {
                     "filename": file.name,
