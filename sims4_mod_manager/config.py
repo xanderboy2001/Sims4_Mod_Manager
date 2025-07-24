@@ -7,7 +7,7 @@ from sims4_mod_manager.utils import config_path, get_mods_dir
 DEFAULT_CONFIG = {
     "paths": {
         "mods_folder": str(get_mods_dir()),
-        "downloads_folder": str(user_downloads_dir())
+        "downloads_folder": str(user_downloads_dir()),
     }
 }
 
