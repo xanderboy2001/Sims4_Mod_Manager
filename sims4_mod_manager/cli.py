@@ -1,49 +1,89 @@
 import argparse
 import sys
+from collections.abc import Callable
 
 from sims4_mod_manager.config import print_config
 from sims4_mod_manager.mods.manager import print_directory_tree
+from sims4_mod_manager.mods.metadata import get_metadata
 from sims4_mod_manager.setup import first_run
 from sims4_mod_manager.utils import get_mods_dir
 
-arg_parser = argparse.ArgumentParser(
-    prog="sims4-mod-manager",
-    description="A simple mod manager for The Sims 4",
-)
+
+def cmd_list(args: argparse.Namespace) -> None:
+    print("Listing installed mods...")
+    print_directory_tree(get_mods_dir())
 
 
-def parse_args():
+def cmd_init(args: argparse.Namespace) -> None:
+    if args.force:
+        print("Simulating first run...")
+        first_run()
+    else:
+        print("Use --force to reset the program.")
+        sys.exit(1)
 
-    subparsers = arg_parser.add_subparsers(dest="command", required=True)
+
+def cmd_dump_config(args: argparse.Namespace) -> None:
+    print("Dumping config...")
+    print_config(args.pretty)
+
+
+def cmd_scan(args: argparse.Namespace) -> None:
+    extensions = args.extensions or ["package", "ts4script"]
+    print(get_metadata(extensions))
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        prog="sims4-mod-manager",
+        description="A simple mod manager for The Sims 4",
+    )
+
+    subparsers = parser.add_subparsers(dest="command", required=True)
 
     subparsers.add_parser("list", help="List all installed mods")
-    subparsers.add_parser(
+
+    parser_init = subparsers.add_parser(
         "init",
         help="""Simulates running the program for the first time
         (WARNING: THIS WILL REMOVE ALL SETTINGS AND RESET THE
-        PROGRAM TO ITS FACTORY DEFAULTS)""",
+        PROGRAM TO ITS FACTORY DEFAULTS) Run with '--force' to execute.""",
     )
-    parser_dump_config = subparsers.add_parser(
-        "dump_config", help="Print the current configuration.")
+    parser_init.add_argument(
+        "--force", action="store_true", help="Use this to reset the program."
+    )
 
-    parser_dump_config.add_argument("--pretty",
-                                    action="store_true",
-                                    help="Pretty-print the config")
+    parser_config = subparsers.add_parser(
+        "dump_config", help="Print the current configuration."
+    )
+    parser_config.add_argument(
+        "--pretty", action="store_true", help="Pretty-print the config"
+    )
 
-    return arg_parser.parse_args()
+    parser_scan = subparsers.add_parser(
+        "scan", help="Scan Mods folder for all '.package' and '.ts4script' files."
+    )
+    parser_scan.add_argument(
+        "extensions",
+        nargs="*",
+        help="Optional extension or extensions to scan for (packages or scripts)",
+    )
+
+    return parser.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_args()
-    if args.command == "list":
-        print("Listing installed mods...")
-        print_directory_tree(get_mods_dir())
-    elif args.command == "init":
-        print("Simulating first run...")
-        first_run()
-    elif args.command == "dump_config":
-        print("Dumping config...")
-        print_config(args.pretty)
+    commands: dict[str, Callable[[argparse.Namespace], None]] = {
+        "list": cmd_list,
+        "init": cmd_init,
+        "dump_config": cmd_dump_config,
+        "scan": cmd_scan,
+    }
+
+    handler = commands.get(args.command)
+    if handler:
+        handler(args)
     else:
-        arg_parser.print_help()
+        print("Unknown command")
         sys.exit(1)
