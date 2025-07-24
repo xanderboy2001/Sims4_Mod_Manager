@@ -1,4 +1,6 @@
-from sims4_mod_manager.utils import get_mods_dir
+import json
+
+from sims4_mod_manager.utils import data_dir, get_mods_dir
 
 PATTERN_MAP = {"package": "*.package", "script": "*.ts4script"}
 EXTENSION_MAP = {".package": "Package", ".ts4script": "Script"}
@@ -26,3 +28,10 @@ def get_metadata(filetypes: str | list[str]) -> list[dict[str, str]]:
             except Exception as e:
                 print(f"Skipping {file}: {e}")
     return metadata_list
+
+
+def write_metadata(metadata: list[dict[str, str]]) -> None:
+    data_dir.mkdir(parents=True, exist_ok=True)
+    data_file = data_dir / "metadata.json"
+    with data_file.open("w", encoding="utf-8") as f:
+        json.dump(metadata, f, indent=4)
