@@ -1,3 +1,18 @@
+"""Command-line interface for the Sims 4 Mod Manager.
+
+This module defines the CLI commands available to users, such as listing
+installed mods, resetting the configuration, printing the current config,
+and scanning for mod metadata.
+
+Functions:
+    cmd_list(args): Lists all installed mods.
+    cmd_init(args): Simulates a first run and resets config if '--force' is passed.
+    cmd_dump_config(args): Prints the current configuration.
+    cmd_scan(args): Scans mods directory for files and writes metadata.
+    parse_args(): Parses CLI arguments.
+    main(): Entry point for CLI command execution.
+"""
+
 import argparse
 import sys
 from collections.abc import Callable
@@ -9,12 +24,24 @@ from sims4_mod_manager.setup import first_run
 from sims4_mod_manager.utils import get_mods_dir
 
 
-def cmd_list(args: argparse.Namespace) -> None:
+def cmd_list() -> None:
+    """Handle the 'list' command.
+
+    Prints a tree view of all mods installed in the configured mods directory.
+    """
     print("Listing installed mods...")
     print_directory_tree(get_mods_dir())
 
 
 def cmd_init(args: argparse.Namespace) -> None:
+    """Handle the 'init' command.
+
+    Simulates a first run by resetting the program configuration.
+    Requires the '--force' flag to proceed.
+
+    Args:
+        args (argparse.Namespace): Parsed command-line arguments.
+    """
     if args.force:
         print("Simulating first run...")
         first_run()
@@ -24,11 +51,26 @@ def cmd_init(args: argparse.Namespace) -> None:
 
 
 def cmd_dump_config(args: argparse.Namespace) -> None:
+    """Handle the 'init' command.
+
+    Simulates a first run by resetting the program configuration.
+    Requires the '--force' flag to proceed.
+
+    Args:
+        args (argparse.Namespace): Parsed command-line arguments.
+    """
     print("Dumping config...")
     print_config(args.pretty)
 
 
 def cmd_scan(args: argparse.Namespace) -> None:
+    """Handle the 'scan' command.
+
+    Scans the mods directory for supported mod file types and writes metadata.
+
+    Args:
+        args (argparse.Namespace): Parsed command-line arguments.
+    """
     metadata = None
     if args.extensions:
         metadata = get_metadata(args.extensions)
@@ -37,6 +79,11 @@ def cmd_scan(args: argparse.Namespace) -> None:
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse command-line arguments.
+
+    Returns:
+        argparse.Namespace: The parsed arguments.
+    """
     parser = argparse.ArgumentParser(
         prog="sims4-mod-manager",
         description="A simple mod manager for The Sims 4",
@@ -76,6 +123,10 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """Main entry point for the CLI.
+
+    Parses arguments and dispatches the appropriate command handler.
+    """
     args = parse_args()
     commands: dict[str, Callable[[argparse.Namespace], None]] = {
         "list": cmd_list,
