@@ -24,7 +24,7 @@ from sims4_mod_manager.setup import first_run
 from sims4_mod_manager.utils import get_mods_dir
 
 
-def cmd_list() -> None:
+def cmd_list(args: argparse.Namespace) -> None:
     """Handle the 'list' command.
 
     Prints a tree view of all mods installed in the configured mods directory.
@@ -91,7 +91,7 @@ def parse_args() -> argparse.Namespace:
 
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    subparsers.add_parser("list", help="List all installed mods")
+    parser_list = subparsers.add_parser("list", help="List all installed mods")
 
     parser_init = subparsers.add_parser(
         "init",

@@ -42,7 +42,7 @@ def get_mods_dir() -> Path:
     """
     os_name = get_os()
     if os_name in ("windows", "mac"):
-        return Path(user_documents_dir())
+        return Path(user_documents_dir()/"Electronic Arts/The Sims 4/Mods")
     elif os_name == "linux":
         return (
             Path.home()

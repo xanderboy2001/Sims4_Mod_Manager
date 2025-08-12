@@ -5,6 +5,8 @@ handling permission and missing path errors gracefully.
 """
 from pathlib import Path
 
+from sims4_mod_manager.utils import get_mods_dir
+
 
 def print_directory_tree(start_path: Path, prefix: str = ""):
     """Print the entire directory tree starting at the given path.
@@ -27,7 +29,8 @@ def print_directory_tree(start_path: Path, prefix: str = ""):
 
     for i, entry in enumerate(entries):
         connector = "├── " if i < len(entries) - 1 else "└── "
-        print(f"{prefix}{connector}{entry}")
-        if entry.isdir():
+        entry_str = str(entry).replace(str(get_mods_dir()), '.')
+        print(f"{prefix}{connector}{entry_str}")
+        if entry.is_dir():
             extension = "│   " if i < len(entries) - 1 else "    "
             print_directory_tree(entry, prefix + extension)
