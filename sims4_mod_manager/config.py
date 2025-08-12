@@ -3,6 +3,7 @@
 Handles creation, loading, and printing of user configuration files,
 including paths for mods and downloads directories.
 """
+
 import json
 
 from platformdirs import user_downloads_dir

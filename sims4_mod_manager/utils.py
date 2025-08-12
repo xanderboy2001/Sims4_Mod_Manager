@@ -3,6 +3,7 @@
 Provides OS detection, config and data directory paths, and
 determines the location of the Sims 4 Mods folder based on the OS.
 """
+
 import sys
 from pathlib import Path
 from typing import Literal
@@ -42,7 +43,7 @@ def get_mods_dir() -> Path:
     """
     os_name = get_os()
     if os_name in ("windows", "mac"):
-        return Path(user_documents_dir()/"Electronic Arts/The Sims 4/Mods")
+        return Path(user_documents_dir() / "Electronic Arts/The Sims 4/Mods")
     elif os_name == "linux":
         return (
             Path.home()

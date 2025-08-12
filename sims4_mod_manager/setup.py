@@ -3,6 +3,7 @@
 This module provides logic to detect and handle the first-time setup,
 including creation of the default configuration file.
 """
+
 from sims4_mod_manager.config import create_default_config
 from sims4_mod_manager.utils import config_file_path
 

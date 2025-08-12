@@ -3,6 +3,7 @@
 Provides functions to scan the mods directory for files, extract metadata,
 and read/write metadata to a JSON data file.
 """
+
 import json
 
 from sims4_mod_manager.utils import data_dir, get_mods_dir
